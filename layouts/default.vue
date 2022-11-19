@@ -1,7 +1,7 @@
 <template>
     <div>
-        <LazyLayoutTopBar />
-        <LazyLayoutMenu />
+        <!-- <LazyLayoutTopBar />
+        <LazyLayoutMenu /> -->
 
         <slot />
     </div>

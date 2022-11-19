@@ -1,0 +1,7 @@
+{
+    "extends": ["@nuxtjs/eslint-config-typescript"],
+    "rules": {
+        "vue/html-indent": ["error", 4],
+        "semi": ["error", "never"]
+    }
+}

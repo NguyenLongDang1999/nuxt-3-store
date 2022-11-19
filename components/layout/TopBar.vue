@@ -1,28 +1,28 @@
 <template>
     <div class="layout-topbar">
         <button class="p-link layout-menu-button layout-topbar-button">
-            <i class="pi pi-bars"></i>
+            <i class="pi pi-bars" />
         </button>
 
         <button class="p-link layout-topbar-menu-button layout-topbar-button">
-            <i class="pi pi-ellipsis-v"></i>
+            <i class="pi pi-ellipsis-v" />
         </button>
         <ul class="layout-topbar-menu hidden lg:flex origin-top">
             <li>
                 <button class="p-link layout-topbar-button">
-                    <i class="pi pi-calendar"></i>
+                    <i class="pi pi-calendar" />
                     <span>Events</span>
                 </button>
             </li>
             <li>
                 <button class="p-link layout-topbar-button">
-                    <i class="pi pi-cog"></i>
+                    <i class="pi pi-cog" />
                     <span>Settings</span>
                 </button>
             </li>
             <li>
                 <button class="p-link layout-topbar-button">
-                    <i class="pi pi-user"></i>
+                    <i class="pi pi-user" />
                     <span>Profile</span>
                 </button>
             </li>
