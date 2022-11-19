@@ -44,7 +44,15 @@ export default {
                     items: [{
                         label: 'Dashboard',
                         icon: 'pi pi-fw pi-home',
-                        to: 'Dashboard'
+                        to: 'dashboard'
+                    }]
+                },
+                {
+                    label: 'Product Manager',
+                    items: [{
+                        label: 'Category',
+                        icon: 'pi pi-fw pi-microsoft',
+                        to: 'category'
                     }]
                 }
             ]

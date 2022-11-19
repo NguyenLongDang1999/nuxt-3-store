@@ -123,7 +123,10 @@ export default {
 
             // execute command
             if (item.command) {
-                item.command({ originalEvent: event, item })
+                item.command({
+                    originalEvent: event,
+                    item
+                })
             }
 
             this.activeIndex = index === this.activeIndex ? null : index

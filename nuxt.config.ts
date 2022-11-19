@@ -17,5 +17,11 @@ export default defineNuxtConfig({
         '/api/v1/**': {
             cors: true
         }
+    },
+    app: {
+        pageTransition: {
+            name: 'page',
+            mode: 'out-in'
+        }
     }
 })
