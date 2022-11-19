@@ -1,7 +1,57 @@
 {
     "extends": ["@nuxtjs/eslint-config-typescript"],
     "rules": {
-        "vue/html-indent": ["error", 4],
+        "indent": ["error", 4],
+        "comma-dangle": ["error", "never"],
+        "object-property-newline": ["error", {
+            "allowAllPropertiesOnSameLine": false
+        }],
+        "object-curly-newline": ["error", "always"],
+        "vue/html-closing-bracket-newline": ["error", {
+            "singleline": "never",
+            "multiline": "always"
+        }],
+        "vue/padding-line-between-blocks": ["error", "always"],
+        "vue/max-attributes-per-line": ["error", {
+            "singleline": {
+                "max": 1
+            },      
+            "multiline": {
+                "max": 1
+            }
+        }],
+        "comma-spacing": ["error", {
+            "before": false,
+            "after": true 
+        }],
+        "vue/html-indent": ["error", 4, {
+            "attribute": 1,
+            "baseIndent": 1,
+            "closeBracket": 0,
+            "alignAttributesVertically": true,
+            "ignores": []
+        }],
+        "vue/script-indent": ["error", 4],
+        "vue/no-duplicate-attributes": ["error", {
+            "allowCoexistClass": true,
+            "allowCoexistStyle": true
+        }],
+        "vue/attributes-order": ["error", {
+            "order": [
+                "DEFINITION",
+                "LIST_RENDERING",
+                "CONDITIONALS",
+                "RENDER_MODIFIERS",
+                "GLOBAL",
+                ["UNIQUE", "SLOT"],
+                "TWO_WAY_BINDING",
+                "OTHER_DIRECTIVES",
+                "OTHER_ATTR",
+                "EVENTS",
+                "CONTENT"
+            ],
+            "alphabetical": false
+        }],
         "semi": ["error", "never"]
     }
 }

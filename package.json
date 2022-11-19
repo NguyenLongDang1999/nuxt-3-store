@@ -9,6 +9,7 @@
         "lint": "eslint --ext .ts,.js,.vue ."
     },
     "dependencies": {
+        "primeflex": "^3.3.0",
         "primeicons": "^6.0.1",
         "primevue": "^3"
     },
