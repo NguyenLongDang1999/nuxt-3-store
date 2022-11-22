@@ -1,2 +1,12 @@
 @import "./_variables";
 @import "./sass/_layout";
+
+// Custom
+.form-label {
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: inherit;
+    margin-bottom: 0.25rem;
+    font-weight: 400;
+    display: inline-block;
+}
