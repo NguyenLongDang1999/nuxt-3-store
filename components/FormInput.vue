@@ -8,6 +8,9 @@
         v-if="props.type === FORM.TEXT"
         :id="props.name"
         :model-value="props.modelValue"
+        :class="{
+            'p-invalid': props.invalid
+        }"
         @input="emit('update:modelValue', ($event.target as HTMLInputElement).value)"
     />
 
@@ -16,6 +19,9 @@
         :id="props.name"
         :model-value="props.modelValue"
         rows="2"
+        :class="{
+            'p-invalid': props.invalid
+        }"
         @input="emit('update:modelValue', ($event.target as HTMLInputElement).value)"
     />
 
@@ -23,6 +29,11 @@
         v-if="props.type === FORM.DROPDOWN"
         :id="props.name"
         :options="options"
+        :class="{
+            'p-invalid': props.invalid
+        }"
+        class="capitalize"
+        panel-class="capitalize"
         :model-value="props.modelValue"
         :value="props.modelValue"
         option-label="label"
@@ -43,7 +54,8 @@ interface Props {
     name: string,
     type: number,
     modelValue?: any,
-    options?: Options[]
+    options?: Options[],
+    invalid?: boolean
 }
 
 const props = defineProps<Props>()

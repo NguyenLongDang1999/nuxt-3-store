@@ -7,43 +7,46 @@
         :modal="true"
         :closable="false"
         header="Thêm Mới Danh Mục"
-        @input="emit('update:showDialog', $event)"
     >
-        <div class="p-fluid formgrid grid">
+        <form
+            class="p-fluid formgrid grid"
+            @submit.prevent="saveCategory(!$v.$invalid)"
+        >
             <div class="field col-12 md:col-6">
                 <FormInput
-                    v-model="form.name"
-                    label="Tiêu đề danh mục"
+                    v-model="$v.name.$model"
+                    :label="$t('category.title')"
                     name="name"
                     :type="FORM.TEXT"
+                    :invalid="$v.name.$error"
                 />
             </div>
 
             <div class="field col-12 md:col-6">
-                <label
-                    for="parent_id"
-                    class="form-label"
-                >Danh mục cha</label>
-
-                <InputText
-                    id="parent_id"
-                    v-model="form.parent_id"
+                <FormInput
+                    v-model="$v.parent_id.$model"
+                    :label="$t('category.name')"
+                    name="parent_id"
+                    :type="FORM.DROPDOWN"
+                    :options="[]"
+                    :invalid="$v.parent_id.$error"
                 />
             </div>
 
             <div class="field col-12">
                 <FormInput
-                    v-model="form.description"
-                    label="Mô tả"
+                    v-model="$v.description.$model"
+                    :label="$t('description')"
                     name="description"
                     :type="FORM.TEXT"
+                    :invalid="$v.description.$error"
                 />
             </div>
 
             <div class="field col-12 md:col-6">
                 <FormInput
-                    v-model="form.status"
-                    label="Trạng thái"
+                    v-model="$v.status.$model"
+                    :label="$t('status')"
                     name="status"
                     :type="FORM.DROPDOWN"
                     :options="optionStatus"
@@ -52,8 +55,8 @@
 
             <div class="field col-12 md:col-6">
                 <FormInput
-                    v-model="form.popular"
-                    label="Phổ biến"
+                    v-model="$v.popular.$model"
+                    :label="$t('popular')"
                     name="popular"
                     :type="FORM.DROPDOWN"
                     :options="optionPopular"
@@ -62,8 +65,8 @@
 
             <div class="field col-12">
                 <FormInput
-                    v-model="form.meta_title"
-                    label="Meta Title"
+                    v-model="$v.meta_title.$model"
+                    :label="$t('meta.title')"
                     name="meta_title"
                     :type="FORM.TEXTAREA"
                 />
@@ -71,8 +74,8 @@
 
             <div class="field col-12">
                 <FormInput
-                    v-model="form.meta_keyword"
-                    label="Meta Keyword"
+                    v-model="$v.meta_keyword.$model"
+                    :label="$t('meta.keyword')"
                     name="meta_keyword"
                     :type="FORM.TEXTAREA"
                 />
@@ -80,24 +83,25 @@
 
             <div class="field col-12">
                 <FormInput
-                    v-model="form.meta_description"
-                    label="Meta Description"
+                    v-model="$v.meta_description.$model"
+                    :label="$t('meta.description')"
                     name="meta_description"
                     :type="FORM.TEXTAREA"
                 />
             </div>
-        </div>
+        </form>
 
         <template #footer>
             <Button
-                label="Hủy Bỏ"
+                :label="$t('action.cancel')"
                 icon="pi pi-times"
                 class="p-button-text"
                 @click="emit('update:showDialog', false)"
             />
 
             <Button
-                label="Lưu Lại"
+                type="submit"
+                :label="$t('action.save')"
                 icon="pi pi-check"
                 @click="saveCategory"
             />
@@ -106,6 +110,15 @@
 </template>
 
 <script setup lang="ts">
+// Import
+import {
+    required,
+    minLength,
+    maxLength
+} from '@vuelidate/validators'
+import { useVuelidate } from '@vuelidate/core'
+
+// Props & Emits
 interface Props {
     showDialog: boolean
 }
@@ -113,19 +126,49 @@ interface Props {
 const props = defineProps<Props>()
 const emit = defineEmits<{(event: 'update:showDialog', payload: boolean): void }>()
 
+// Data
 const form = reactive({
     name: '',
     parent_id: '',
     description: '',
-    status: '',
-    popular: '',
+    status: STATUS.ACTIVE,
+    popular: POPULAR.INACTIVE,
     image_uri: '',
     meta_title: '',
     meta_keyword: '',
     meta_description: ''
 })
 
-const saveCategory = () => {
+const rules = {
+    name: {
+        required,
+        minLength: minLength(3),
+        maxLength: maxLength(30)
+    },
+    parent_id: { required },
+    status: { required },
+    popular: { required },
+    description: { maxLength: maxLength(160) },
+    meta_title: { maxLength: maxLength(60) },
+    meta_keyword: { maxLength: maxLength(60) },
+    meta_description: { maxLength: maxLength(160) }
+}
+
+const $v = useVuelidate(rules, form)
+
+// Watch
+watch(() => props.showDialog, (newData: boolean) => {
+    if (newData) {
+        // console.log('?')
+    }
+})
+
+// Methods
+const saveCategory = (isFormValid: boolean) => {
+    if (!isFormValid) {
+        return
+    }
+
     console.log(form)
 }
 </script>

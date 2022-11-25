@@ -1,0 +1,20 @@
+{
+    "status": "Trạng thái",
+    "popular": "Phổ biến",
+    "description": "Mô tả",
+    "category": {
+        "name": "Danh mục",
+        "title": "Tiêu đề danh mục",
+        "parent_id": "Danh mục cha"
+    },
+    "meta": {
+        "title": "Meta Title",
+        "keyword": "Meta Keyword",
+        "description": "Meta Description"
+    },
+    "action": {
+        "save": "Lưu Lại",
+        "cancel": "Hủy Bỏ",
+        "back": "Quay Lại"
+    }
+}
