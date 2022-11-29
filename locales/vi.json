@@ -5,7 +5,10 @@
     "category": {
         "name": "Danh mục",
         "title": "Tiêu đề danh mục",
-        "parent_id": "Danh mục cha"
+        "parent_id": "Danh mục cha",
+        "create": "Thêm Mới Danh Mục",
+        "update": "Chỉnh Sửa Danh Mục",
+        "manager": "Quản lý danh mục"
     },
     "meta": {
         "title": "Meta Title",
@@ -15,6 +18,13 @@
     "action": {
         "save": "Lưu Lại",
         "cancel": "Hủy Bỏ",
-        "back": "Quay Lại"
+        "back": "Quay Lại",
+        "create": "Thêm Mới"
+    },
+    "toast": {
+        "success": "Thành Công",
+        "error": "Thất Bại",
+        "message_success": "Dữ liệu {name} đã được lưu thành công!",
+        "message_error": "Có lỗi xảy ra trong quá trình thao tác. Vui lòng kiểm tra lại!"
     }
 }

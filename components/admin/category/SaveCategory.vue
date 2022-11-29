@@ -6,30 +6,26 @@
         :draggable="false"
         :modal="true"
         :closable="false"
-        header="Thêm Mới Danh Mục"
+        :header="$t('category.create')"
     >
-        <form
-            class="p-fluid formgrid grid"
-            @submit.prevent="saveCategory(!$v.$invalid)"
-        >
+        <div class="p-fluid formgrid grid">
             <div class="field col-12 md:col-6">
                 <FormInput
                     v-model="$v.name.$model"
                     :label="$t('category.title')"
                     name="name"
                     :type="FORM.TEXT"
-                    :invalid="$v.name.$error"
+                    :invalid="$v.name.$invalid && valid"
                 />
             </div>
 
             <div class="field col-12 md:col-6">
                 <FormInput
-                    v-model="$v.parent_id.$model"
+                    v-model="form.parent_id"
                     :label="$t('category.name')"
                     name="parent_id"
                     :type="FORM.DROPDOWN"
                     :options="[]"
-                    :invalid="$v.parent_id.$error"
                 />
             </div>
 
@@ -39,13 +35,13 @@
                     :label="$t('description')"
                     name="description"
                     :type="FORM.TEXT"
-                    :invalid="$v.description.$error"
+                    :invalid="$v.description.$invalid && valid"
                 />
             </div>
 
             <div class="field col-12 md:col-6">
                 <FormInput
-                    v-model="$v.status.$model"
+                    v-model="form.status"
                     :label="$t('status')"
                     name="status"
                     :type="FORM.DROPDOWN"
@@ -55,7 +51,7 @@
 
             <div class="field col-12 md:col-6">
                 <FormInput
-                    v-model="$v.popular.$model"
+                    v-model="form.popular"
                     :label="$t('popular')"
                     name="popular"
                     :type="FORM.DROPDOWN"
@@ -69,6 +65,7 @@
                     :label="$t('meta.title')"
                     name="meta_title"
                     :type="FORM.TEXTAREA"
+                    :invalid="$v.meta_title.$invalid && valid"
                 />
             </div>
 
@@ -78,6 +75,7 @@
                     :label="$t('meta.keyword')"
                     name="meta_keyword"
                     :type="FORM.TEXTAREA"
+                    :invalid="$v.meta_keyword.$invalid && valid"
                 />
             </div>
 
@@ -87,23 +85,24 @@
                     :label="$t('meta.description')"
                     name="meta_description"
                     :type="FORM.TEXTAREA"
+                    :invalid="$v.meta_description.$invalid && valid"
                 />
             </div>
-        </form>
+        </div>
 
         <template #footer>
             <Button
                 :label="$t('action.cancel')"
                 icon="pi pi-times"
                 class="p-button-text"
-                @click="emit('update:showDialog', false)"
+                @click="closeDialog"
             />
 
             <Button
                 type="submit"
                 :label="$t('action.save')"
                 icon="pi pi-check"
-                @click="saveCategory"
+                @click="saveCategory(!$v.$invalid)"
             />
         </template>
     </Dialog>
@@ -124,20 +123,27 @@ interface Props {
 }
 
 const props = defineProps<Props>()
-const emit = defineEmits<{(event: 'update:showDialog', payload: boolean): void }>()
+const emit = defineEmits<{
+    (event: 'update:showDialog', payload: boolean): void
+    (event: 'showMessage', payload: boolean): void
+}>()
 
 // Data
-const form = reactive({
+const getInitialFormData = () => ({
     name: '',
     parent_id: '',
     description: '',
-    status: STATUS.ACTIVE,
-    popular: POPULAR.INACTIVE,
+    status: '',
+    popular: '',
     image_uri: '',
     meta_title: '',
     meta_keyword: '',
     meta_description: ''
 })
+
+const categoryStore = useCategoryStore()
+const valid = ref(false)
+const form = reactive(getInitialFormData())
 
 const rules = {
     name: {
@@ -145,9 +151,6 @@ const rules = {
         minLength: minLength(3),
         maxLength: maxLength(30)
     },
-    parent_id: { required },
-    status: { required },
-    popular: { required },
     description: { maxLength: maxLength(160) },
     meta_title: { maxLength: maxLength(60) },
     meta_keyword: { maxLength: maxLength(60) },
@@ -164,13 +167,28 @@ watch(() => props.showDialog, (newData: boolean) => {
 })
 
 // Methods
-const saveCategory = (isFormValid: boolean) => {
+const saveCategory = async (isFormValid: boolean) => {
+    valid.value = true
+
     if (!isFormValid) {
         return
     }
 
-    console.log(form)
+    fillFormData(form)
+
+    await categoryStore.create(form)
+        .then(() => {
+            valid.value = false
+            emit('showMessage', true)
+            closeDialog()
+            resetForm()
+            categoryStore.getList()
+        })
+        .catch(() => emit('showMessage', false))
 }
+
+const closeDialog = () => emit('update:showDialog', false)
+const resetForm = () => Object.assign(form, getInitialFormData())
 </script>
 
 <style scoped>

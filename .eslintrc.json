@@ -71,6 +71,7 @@
             ],
             "alphabetical": false
         }],
-        "semi": ["error", "never"]
+        "semi": ["error", "never"],
+        "func-call-spacing": ["error", "never"]
     }
 }

@@ -6,15 +6,16 @@ import InputText from 'primevue/inputtext'
 import Textarea from 'primevue/textarea'
 import Dropdown from 'primevue/dropdown'
 import Password from 'primevue/password'
+import DataTable from 'primevue/datatable'
+import Column from 'primevue/column'
+import Toast from 'primevue/toast'
+import ToastService from 'primevue/toastservice'
 import StyleClass from 'primevue/styleclass'
-import {
-    defineNuxtPlugin
-} from '#app'
+import { defineNuxtPlugin } from '#app'
 
 export default defineNuxtPlugin((nuxtApp) => {
-    nuxtApp.vueApp.use(PrimeVue, {
-        ripple: true
-    })
+    nuxtApp.vueApp.use(PrimeVue, { ripple: true })
+    nuxtApp.vueApp.use(ToastService)
 
     // Components
     nuxtApp.vueApp.component('Button', Button)
@@ -24,6 +25,9 @@ export default defineNuxtPlugin((nuxtApp) => {
     nuxtApp.vueApp.component('Dropdown', Dropdown)
     nuxtApp.vueApp.component('Textarea', Textarea)
     nuxtApp.vueApp.component('Password', Password)
+    nuxtApp.vueApp.component('DataTable', DataTable)
+    nuxtApp.vueApp.component('Column', Column)
+    nuxtApp.vueApp.component('Toast', Toast)
 
     // Directive
     nuxtApp.vueApp.directive('styleclass', StyleClass)

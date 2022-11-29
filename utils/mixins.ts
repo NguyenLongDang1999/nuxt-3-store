@@ -19,3 +19,11 @@ export const optionPopular = [
         value: POPULAR.INACTIVE
     }
 ]
+
+export const fillFormData = (form: any) => {
+    Object.keys(form).forEach((key) => {
+        if (!form[key]) {
+            delete form[key]
+        }
+    })
+}

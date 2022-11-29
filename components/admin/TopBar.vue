@@ -54,10 +54,8 @@
     </div>
 </template>
 
-<script setup>
-definePageMeta({
-    layout: 'admin'
-})
+<script setup lang="ts">
+definePageMeta({ layout: 'admin' })
 defineEmits(['menu-toggle'])
 </script>
 
