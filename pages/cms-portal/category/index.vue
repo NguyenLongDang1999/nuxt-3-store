@@ -12,7 +12,10 @@
                 />
 
                 <!-- List -->
-                <LazyAdminCategoryListCategory />
+                <LazyAdminCategoryListCategory
+                    @show-dialog="(val: boolean) => showDialog = val"
+                    @show-category="(val: object) => category = val"
+                />
                 <!-- /List -->
             </div>
         </div>
@@ -20,6 +23,7 @@
         <!-- Dialog -->
         <LazyAdminCategorySaveCategory
             v-model:show-dialog="showDialog"
+            :category="category"
             @show-message="showMessage"
         />
         <!-- /Dialog -->
@@ -40,6 +44,7 @@ definePageMeta({
 const showDialog = ref(false)
 const { t } = useI18n()
 const toast = useToast()
+const category = reactive({})
 
 // Watch
 

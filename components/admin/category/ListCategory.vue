@@ -54,6 +54,20 @@
                 </span>
             </template>
         </Column>
+
+        <Column header-style="min-width:10rem;">
+            <template #body="slotProps">
+                <Button
+                    icon="pi pi-pencil"
+                    class="p-button-rounded p-button-success mr-2"
+                    @click="editCategory(slotProps.data)"
+                />
+                <Button
+                    icon="pi pi-trash"
+                    class="p-button-rounded p-button-warning mt-2"
+                />
+            </template>
+        </Column>
     </DataTable>
 </template>
 
@@ -63,6 +77,12 @@ const dt = ref()
 const lazyParams = ref({})
 const totalRecords = ref(0)
 const loading = ref(false)
+
+// Props & Emits
+const emit = defineEmits<{
+    (event: 'showCategory', payload: object): void
+    (event: 'showDialog', payload: boolean): void
+}>()
 
 // Store
 const categoryStore = useCategoryStore()
@@ -83,6 +103,11 @@ const getCategoryList = () => {
 const onPage = (event: any) => {
     lazyParams.value = event
     getCategoryList()
+}
+
+const editCategory = (category: object) => {
+    emit('showDialog', true)
+    emit('showCategory', category)
 }
 
 onMounted(() => {

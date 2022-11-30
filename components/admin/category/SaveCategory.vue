@@ -6,7 +6,7 @@
         :draggable="false"
         :modal="true"
         :closable="false"
-        :header="$t('category.create')"
+        :header="form.id ? $t('category.update') : $t('category.create')"
     >
         <div class="p-fluid formgrid grid">
             <div class="field col-12 md:col-6">
@@ -120,6 +120,7 @@ import { useVuelidate } from '@vuelidate/core'
 // Props & Emits
 interface Props {
     showDialog: boolean
+    category?: {}
 }
 
 const props = defineProps<Props>()
@@ -130,6 +131,7 @@ const emit = defineEmits<{
 
 // Data
 const getInitialFormData = () => ({
+    id: '',
     name: '',
     parent_id: '',
     description: '',
@@ -162,7 +164,7 @@ const $v = useVuelidate(rules, form)
 // Watch
 watch(() => props.showDialog, (newData: boolean) => {
     if (newData) {
-        // console.log('?')
+        Object.assign(form, props.category)
     }
 })
 
@@ -176,19 +178,26 @@ const saveCategory = async (isFormValid: boolean) => {
 
     fillFormData(form)
 
-    await categoryStore.create(form)
-        .then(() => {
-            valid.value = false
-            emit('showMessage', true)
-            closeDialog()
-            resetForm()
-            categoryStore.getList()
-        })
+    if (form.id) {
+        return await categoryStore.update(form)
+            .then(() => resetData())
+            .catch(() => emit('showMessage', false))
+    }
+
+    return await categoryStore.create(form)
+        .then(() => resetData())
         .catch(() => emit('showMessage', false))
 }
 
 const closeDialog = () => emit('update:showDialog', false)
 const resetForm = () => Object.assign(form, getInitialFormData())
+const resetData = () => {
+    resetForm()
+    closeDialog()
+    valid.value = false
+    categoryStore.getList()
+    emit('showMessage', true)
+}
 </script>
 
 <style scoped>
