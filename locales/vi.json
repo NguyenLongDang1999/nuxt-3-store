@@ -26,5 +26,9 @@
         "error": "Thất Bại",
         "message_success": "Dữ liệu {name} đã được lưu thành công!",
         "message_error": "Có lỗi xảy ra trong quá trình thao tác. Vui lòng kiểm tra lại!"
+    },
+    "confirm": {
+        "header": "Xác Nhận",
+        "message": "Bạn có chắc chắn muốn xóa {name} này?"
     }
 }

@@ -8,13 +8,18 @@
                     :label="$t('action.create')"
                     icon="pi pi-plus"
                     class="mr-2 mb-5"
-                    @click="showDialog = true"
+                    @click="() => {
+                        category = {}
+                        showDialog = true
+                    }"
                 />
 
                 <!-- List -->
                 <LazyAdminCategoryListCategory
                     @show-dialog="(val: boolean) => showDialog = val"
                     @show-category="(val: object) => category = val"
+                    @show-message="showMessage"
+                    @show-pagination="(val: object) => lazyParams = val"
                 />
                 <!-- /List -->
             </div>
@@ -24,6 +29,7 @@
         <LazyAdminCategorySaveCategory
             v-model:show-dialog="showDialog"
             :category="category"
+            :lazy-params="lazyParams"
             @show-message="showMessage"
         />
         <!-- /Dialog -->
@@ -45,8 +51,7 @@ const showDialog = ref(false)
 const { t } = useI18n()
 const toast = useToast()
 const category = reactive({})
-
-// Watch
+const lazyParams = reactive({})
 
 // Methods
 const showMessage = (val: boolean) => {

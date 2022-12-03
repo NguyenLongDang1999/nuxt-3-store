@@ -9,13 +9,16 @@ import Password from 'primevue/password'
 import DataTable from 'primevue/datatable'
 import Column from 'primevue/column'
 import Toast from 'primevue/toast'
+import ConfirmDialog from 'primevue/confirmdialog'
 import ToastService from 'primevue/toastservice'
+import ConfirmationService from 'primevue/confirmationservice'
 import StyleClass from 'primevue/styleclass'
 import { defineNuxtPlugin } from '#app'
 
 export default defineNuxtPlugin((nuxtApp) => {
     nuxtApp.vueApp.use(PrimeVue, { ripple: true })
     nuxtApp.vueApp.use(ToastService)
+    nuxtApp.vueApp.use(ConfirmationService)
 
     // Components
     nuxtApp.vueApp.component('Button', Button)
@@ -28,6 +31,7 @@ export default defineNuxtPlugin((nuxtApp) => {
     nuxtApp.vueApp.component('DataTable', DataTable)
     nuxtApp.vueApp.component('Column', Column)
     nuxtApp.vueApp.component('Toast', Toast)
+    nuxtApp.vueApp.component('ConfirmDialog', ConfirmDialog)
 
     // Directive
     nuxtApp.vueApp.directive('styleclass', StyleClass)

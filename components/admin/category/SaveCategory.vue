@@ -116,11 +116,13 @@ import {
     maxLength
 } from '@vuelidate/validators'
 import { useVuelidate } from '@vuelidate/core'
+import { CategoryListInput } from '~~/utils/interface'
 
 // Props & Emits
 interface Props {
     showDialog: boolean
-    category?: {}
+    category?: CategoryListInput,
+    lazyParams: object
 }
 
 const props = defineProps<Props>()
@@ -162,11 +164,7 @@ const rules = {
 const $v = useVuelidate(rules, form)
 
 // Watch
-watch(() => props.showDialog, (newData: boolean) => {
-    if (newData) {
-        Object.assign(form, props.category)
-    }
-})
+watch(() => props.showDialog, (newData: boolean) => newData && props.category?.id ? Object.assign(form, props.category) : resetForm())
 
 // Methods
 const saveCategory = async (isFormValid: boolean) => {
@@ -192,10 +190,10 @@ const saveCategory = async (isFormValid: boolean) => {
 const closeDialog = () => emit('update:showDialog', false)
 const resetForm = () => Object.assign(form, getInitialFormData())
 const resetData = () => {
-    resetForm()
-    closeDialog()
     valid.value = false
-    categoryStore.getList()
+    resetForm()
+    categoryStore.getList({ lazyEvent: JSON.stringify(props.lazyParams) })
+    closeDialog()
     emit('showMessage', true)
 }
 </script>

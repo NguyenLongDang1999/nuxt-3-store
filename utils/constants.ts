@@ -22,3 +22,13 @@ export enum TOAST {
 export enum PAGINATOR {
     SIZE = 10
 }
+
+export enum ROUTE {
+    CATEGORY = 'category'
+}
+
+export enum METHOD {
+    POST = 'POST',
+    PATCH = 'PATCH',
+    DELETE = 'DELETE'
+}
