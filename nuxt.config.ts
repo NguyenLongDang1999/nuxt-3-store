@@ -15,7 +15,15 @@ export default defineNuxtConfig({
     modules: [
         ['@pinia/nuxt', { autoImports: ['defineStore'] }]
     ],
-    runtimeConfig: { public: { apiBaseURL: process.env.NUXT_APP_BASE_URL_API || '/api' } },
+    runtimeConfig: {
+        public: {
+            apiBaseURL: process.env.NUXT_APP_BASE_URL_API || '/api',
+            bunnyCdnURL: process.env.NUXT_APP_BUNNY_CDN_URL,
+            bunnyCDN: process.env.NUXT_APP_BUNNY_CDN_IMAGE,
+            bunnyAPIKey: process.env.NUXT_APP_BUNNY_API_KEY,
+            bunnyAccessKey: process.env.NUXT_APP_ACCESS_KEY
+        }
+    },
     imports: { dirs: ['stores'] },
     app: {
         pageTransition: {

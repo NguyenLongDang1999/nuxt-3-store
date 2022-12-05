@@ -10,3 +10,14 @@ export const useFetchPostData = async (path: string, { ...data }, method = METHO
         ...data
     })
 }
+
+export const useFetchPutFile = async (path: string, body: object) => {
+    return await $fetch(`${config.public.bunnyCdnURL}/image/${path}`, {
+        method: METHOD.PUT,
+        headers: {
+            'content-type': 'application/octet-stream',
+            AccessKey: config.public.bunnyAccessKey
+        },
+        body
+    })
+}

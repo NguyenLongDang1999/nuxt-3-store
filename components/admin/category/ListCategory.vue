@@ -11,7 +11,7 @@
         :value="categoryStore.categoryList"
         paginator-template="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink"
         data-key="id"
-        responsive-layout="stack"
+        responsive-layout="scroll"
         breakpoint="960px"
         @page="onPage($event)"
     >
@@ -19,26 +19,46 @@
             field="name"
             :header="$t('category.title')"
             class="capitalize"
-        />
+            style="min-width: 14rem"
+        >
+            <template #body="slotProps">
+                <Image
+                    v-if="slotProps.data.image_uri"
+                    :src="getImageURL(ROUTE.CATEGORY, slotProps.data.image_uri)"
+                    :alt="slotProps.data.name"
+                    width="50"
+                    image-class="rounded"
+                    preview
+                />
+
+                <Button
+                    :label="slotProps.data.name"
+                    class="p-button-link text-left"
+                    @click="editCategory(slotProps.data)"
+                />
+            </template>
+        </Column>
 
         <Column
             field="parentCategory.name"
             :header="$t('category.parent_id')"
             class="capitalize"
+            style="min-width: 14rem"
         />
 
         <Column
             field="status"
             :header="$t('status')"
             class="capitalize"
+            style="min-width: 8rem"
         >
             <template #body="slotProps">
-                <span
-                    class="product-badge"
-                    :class="slotProps.data.status === STATUS.ACTIVE ? 'status-instock' : 'status-outofstock'"
+                <Badge
+                    :severity="slotProps.data.status === STATUS.ACTIVE ? 'success' : 'danger'"
+                    size="large"
                 >
-                    {{ optionStatus.find((item) => slotProps.data.status === item.value)?.label }}
-                </span>
+                    <i :class="optionStatus.find((item) => slotProps.data.status === item.value)?.icon" />
+                </Badge>
             </template>
         </Column>
 
@@ -46,24 +66,32 @@
             field="popular"
             :header="$t('popular')"
             class="capitalize"
+            style="min-width: 8rem"
         >
             <template #body="slotProps">
-                <span
-                    class="product-badge"
-                    :class="slotProps.data.popular === POPULAR.ACTIVE ? 'status-instock' : 'status-outofstock'"
+                <Badge
+                    :severity="slotProps.data.popular === POPULAR.ACTIVE ? 'success' : 'danger'"
+                    size="large"
                 >
-                    {{ optionPopular.find((item) => slotProps.data.popular === item.value)?.label }}
-                </span>
+                    <i :class="optionPopular.find((item) => slotProps.data.popular === item.value)?.icon" />
+                </Badge>
             </template>
         </Column>
 
-        <Column header-style="min-width:10rem;">
+        <Column style="min-width: 14rem">
             <template #body="slotProps">
                 <Button
                     icon="pi pi-pencil"
                     class="p-button-rounded p-button-success mr-2"
                     @click="editCategory(slotProps.data)"
                 />
+
+                <Button
+                    icon="pi pi-upload"
+                    class="p-button-rounded p-button-info mr-2"
+                    @click="uploadCategory(slotProps.data)"
+                />
+
                 <Button
                     icon="pi pi-trash"
                     class="p-button-rounded p-button-warning mt-2"
@@ -92,6 +120,7 @@ const emit = defineEmits<{
     (event: 'showDialog', payload: boolean): void
     (event: 'showMessage', payload: boolean): void
     (event: 'showPagination', payload: object): void
+    (event: 'showUploadDialog', payload: boolean): void
 }>()
 
 // Store
@@ -114,6 +143,11 @@ const onPage = (event: any) => {
     lazyParams.value = event
     emit('showPagination', lazyParams.value)
     getCategoryList()
+}
+
+const uploadCategory = (category: object) => {
+    emit('showUploadDialog', true)
+    emit('showCategory', category)
 }
 
 const editCategory = (category: object) => {

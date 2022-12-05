@@ -10,3 +10,15 @@
     font-weight: 400;
     display: inline-block;
 }
+
+.text-truncate {
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    max-width: 100%;
+}
+
+.rounded {
+    border-radius: 50%;
+    object-fit: cover;
+}

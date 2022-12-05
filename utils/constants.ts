@@ -29,6 +29,7 @@ export enum ROUTE {
 
 export enum METHOD {
     POST = 'POST',
+    PUT = 'PUT',
     PATCH = 'PATCH',
     DELETE = 'DELETE'
 }

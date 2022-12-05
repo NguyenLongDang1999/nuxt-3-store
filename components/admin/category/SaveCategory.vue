@@ -9,6 +9,19 @@
         :header="form.id ? $t('category.update') : $t('category.create')"
     >
         <div class="p-fluid formgrid grid">
+            <div
+                v-if="form.image_uri"
+                class="field col-12"
+            >
+                <Image
+                    :src="getImageURL(ROUTE.CATEGORY, form.image_uri)"
+                    :alt="form.name"
+                    width="150"
+                    image-class="mt-0 mx-auto mb-5 block shadow-2"
+                    preview
+                />
+            </div>
+
             <div class="field col-12 md:col-6">
                 <FormInput
                     v-model="$v.name.$model"
@@ -20,12 +33,18 @@
             </div>
 
             <div class="field col-12 md:col-6">
-                <FormInput
+                <label
+                    for="parent_id"
+                    class="form-label"
+                >{{ $t('category.name') }}</label>
+
+                <TreeSelect
+                    id="parent_id"
                     v-model="form.parent_id"
-                    :label="$t('category.name')"
-                    name="parent_id"
-                    :type="FORM.DROPDOWN"
-                    :options="[]"
+                    :options="categoryStore.recursiveList"
+                    placeholder="Vui lòng chọn"
+                    class="capitalize"
+                    panel-class="capitalize"
                 />
             </div>
 
@@ -135,6 +154,7 @@ const emit = defineEmits<{
 const getInitialFormData = () => ({
     id: '',
     name: '',
+    slug: '',
     parent_id: '',
     description: '',
     status: '',
@@ -164,7 +184,21 @@ const rules = {
 const $v = useVuelidate(rules, form)
 
 // Watch
-watch(() => props.showDialog, (newData: boolean) => newData && props.category?.id ? Object.assign(form, props.category) : resetForm())
+watch(() => props.showDialog, async (newData: boolean) => {
+    if (newData) {
+        if (props.category?.id) {
+            Object.assign(form, props.category)
+        } else {
+            resetForm()
+        }
+
+        await categoryStore.getRecursiveList()
+    }
+})
+
+watch(() => form.name, (newData: string) => {
+    form.slug = slugify(newData)
+})
 
 // Methods
 const saveCategory = async (isFormValid: boolean) => {
@@ -173,6 +207,8 @@ const saveCategory = async (isFormValid: boolean) => {
     if (!isFormValid) {
         return
     }
+
+    form.parent_id = Object.keys(form.parent_id)[0]
 
     fillFormData(form)
 
@@ -198,6 +234,6 @@ const resetData = () => {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 
 </style>

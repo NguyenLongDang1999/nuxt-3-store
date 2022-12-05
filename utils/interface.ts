@@ -21,3 +21,9 @@ export interface CategoryListInput {
     meta_keyword?: string
     meta_description?: string
 }
+
+export interface CategoryListRecursive {
+    key?: string
+    label?: string
+    // children?: string[]
+}

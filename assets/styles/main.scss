@@ -5875,98 +5875,19 @@
     box-shadow: inset 0 -2px 0 0 #6366f1;
 }
 
-.customer-badge,
-.product-badge,
-.order-badge {
-    border-radius: var(--border-radius);
-    padding: .25em .5rem;
-    text-transform: uppercase;
-    font-weight: 700;
-    font-size: 12px;
-    letter-spacing: .3px;
+.p-fileupload .p-fileupload-file {
+    padding: 1rem;
+    border: 1px solid #dee2e6;
+    border-radius: 6px;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
 }
-
-.customer-badge {
-    &.status-qualified {
-        background: #C8E6C9;
-        color: #256029;
-    }
-
-    &.status-unqualified {
-        background: #FFCDD2;
-        color: #C63737;
-    }
-
-    &.status-negotiation {
-        background: #FEEDAF;
-        color: #8A5340;
-    }
-
-    &.status-new {
-        background: #B3E5FC;
-        color: #23547B;
-    }
-
-    &.status-renewal {
-        background: #ECCFFF;
-        color: #694382;
-    }
-
-    &.status-proposal {
-        background: #FFD8B2;
-        color: #805B36;
-    }
+.p-fileupload .p-fileupload-file:last-child {
+    margin-bottom: 0;
 }
-
-.product-badge {
-    border-radius: var(--border-radius);
-    padding: .25em .5rem;
-    text-transform: uppercase;
-    font-weight: 700;
-    font-size: 12px;
-    letter-spacing: .3px;
-
-    &.status-instock {
-        background: #C8E6C9;
-        color: #256029;
-    }
-
-    &.status-outofstock {
-        background: #FFCDD2;
-        color: #C63737;
-    }
-
-    &.status-lowstock {
-        background: #FEEDAF;
-        color: #8A5340;
-    }
+.p-fileupload .p-fileupload-file-name {
+    margin-bottom: 0.5rem;
 }
-
-.order-badge {
-    border-radius: var(--border-radius);
-    padding: .25em .5rem;
-    text-transform: uppercase;
-    font-weight: 700;
-    font-size: 12px;
-    letter-spacing: .3px;
-
-    &.order-delivered {
-        background: #C8E6C9;
-        color: #256029;
-    }
-
-    &.order-cancelled {
-        background: #FFCDD2;
-        color: #C63737;
-    }
-
-    &.order-pending {
-        background: #FEEDAF;
-        color: #8A5340;
-    }
-
-    &.order-returned {
-        background: #ECCFFF;
-        color: #694382;
-    }
+.p-fileupload .p-fileupload-file-size {
+    margin-right: 0.5rem;
 }

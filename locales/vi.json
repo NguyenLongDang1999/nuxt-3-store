@@ -30,5 +30,11 @@
     "confirm": {
         "header": "Xác Nhận",
         "message": "Bạn có chắc chắn muốn xóa {name} này?"
+    },
+    "upload": {
+        "choose": "Chọn Hình",
+        "upload": "Tải Lên",
+        "cancel": "Hủy Bỏ",
+        "main": "Hình Đại Diện"
     }
 }
